@@ -15,6 +15,7 @@
 ‎int D2 = 11;
 ‎int D3 = 12;
 ‎int D4 = 13;
+int buzzer = A1;
 ‎
 ‎int seg_outputs [7] = {A, B, C, D, E, F, G, DP};
 ‎
@@ -61,11 +62,17 @@ unsigned long stop = 0;
 ‎     for (int i = 0; i < (sizeof(seg_outputs)/sizeof(seg_outputs[0])); i++;){
 ‎         pinMode(seg_outputs[i], OUTPUT);
 ‎         digitalWrite(seg_outputs[i], LOW);
-‎         Serial.begin(9600);
-‎         rtc.begin();
-         EEPROM.get(0, stop);
+
+      for (int i = 0; i<(sizeof(digit)/sizeof(digit[0])){
+         pinMode(digit[i], LOW); 
+      }
+      digitalWrite(buzzer, LOW);
+      pinMode(buzzer, OUTPUT);
+‎      Serial.begin(9600);
+‎      rtc.begin();
+      EEPROM.get(0, stop);
 ‎         
-‎         while (!serial){;}
+‎      while (!serial){;}
 ‎       }
 ‎}
 ‎
