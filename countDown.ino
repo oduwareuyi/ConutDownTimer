@@ -19,6 +19,9 @@
 ‎int seg_outputs [7] = {A, B, C, D, E, F, G, DP};
 ‎
 ‎int digits_output [4] = {D1, D2, D3, D4};
+
+unsigned long start = 0;
+unsigned long stop = 0;
 ‎
 ‎int segs [10][7] = {
 ‎  {0,1,1,1,1,1,1,0},
@@ -48,9 +51,9 @@
 ‎
 ‎int digit_position= -1;
 ‎
-‎int digit1 = 2;
-‎int digit2 = 4;
-‎int digit3 = 6;
+‎int digit1 = 0;
+‎int digit2 = 0;
+‎int digit3 = 0;
 ‎int digit4 = 0;
 ‎int digit[4]  = {digit1, digit2, digit3, digit4};
 ‎
@@ -60,6 +63,7 @@
 ‎         digitalWrite(seg_outputs[i], LOW);
 ‎         Serial.begin(9600);
 ‎         rtc.begin();
+         EEPROM.get(0, stop);
 ‎         
 ‎         while (!serial){;}
 ‎       }
@@ -67,84 +71,97 @@
 ‎
 ‎void loop(){
 ‎     DateTime now = rtc.now();
+     currentTime = now.unixtime();
+     if (currentTime >= stop){
+       for (int i = 0; i< (sizeof(digit)/sizeof(digit[0]){
+         input = 0;
+         setDisplay(input, digit_position);
+         digit[digit_position+=1] = input;
+
+        while(true){
+         analogWrite(A1, HIGH);
+         while(Serial.available()==0){;}
+         buzzer_input = Serial.println("Type 'STOP' to shut off alarm")
+
+         if (buzzer_input == "STOP"){
+           break;
+         }else{
+            Serial.println("Buzzer input not recognized.");
+         }
+        }
+     }
 ‎     if ((timeUnit == "hr") || (timeUnit == "Hr") || (timeUnit == "hR") || (timeUnit == "HR"){
 ‎        Serial.println("Enter the hour (First digit)");
 ‎        while(Serial.available() == 0){;}
 ‎        input = Serial.parseint();
-‎        hour_digit1 = input;
 ‎        setDisplay(input, digit_position);
 ‎        digit[digit_position+=1] = input;
 ‎
 ‎       Serial.println("Enter the hour (Second digit)");
 ‎       while(Serial.available() == 0){;}
 ‎       input = Serial.parseint();
-‎       hour_digit2 = input;
 ‎       setDisplay(input, digit_position);
 ‎       digit[digit_position+=1] = input;
 ‎  
 ‎      Serial.println("Enter the minute (First digit)");
 ‎      while(Serial.available() == 0){;}
 ‎      input = Serial.parseint();
-‎      min_digit1 = input;
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
 ‎
 ‎      Serial.println("Enter the minute (Second digit)");
 ‎      while(Serial.available() == 0){;}
 ‎      input = Serial.parseint();
-‎      min_digit2 = input;
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
+
+       hours = (digit1 * 10 + digit2) * 60 * 60;
+       mins = (digit1 * 10 + digit2) * 60;
+       start = now.unixtime();
+       stop = start + hours + mins;
+       EEPROM.put(0, stop);
 ‎  }else if ((timeUnit == "min") || (timeUnit == "Min") || (timeUnit == "MIN")){
 ‎       Serial.println("Enter the min (First digit)");
 ‎       while(Serial.available() == 0){;}
 ‎        input = Serial.parseint();
-‎        min_digit1 = input;
 ‎        setDisplay(input, digit_position);
 ‎        digit[digit_position+=1] = input;
 ‎
 ‎       Serial.println("Enter the min (Second digit)");
 ‎       while(Serial.available() == 0){;}
 ‎       input = Serial.parseint();
-‎       min_digit2 = input;
 ‎       setDisplay(input, digit_position);
 ‎       digit[digit_position+=1] = input;
 ‎  
 ‎      Serial.println("Enter the sec (First digit)");
 ‎      while(Serial.available() == 0){;}
 ‎      input = Serial.parseint();
-‎      sec_digit1 = input;
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
 ‎
 ‎     Serial.println("Enter the sec (Second digit)");
 ‎      while(Serial.available() == 0){;}
 ‎      input = Serial.parseint();
-‎      sec_digit2 = input;
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
 ‎    }else if((timeUnit == "sec") || (timeUnit == "Sec") || timeUnit = "SEC")){
 ‎        input = 0;
-‎        min_digit1 = input;
 ‎        setDisplay(input, digit_position);
 ‎        digit[digit_position+=1] = input;
 ‎
 ‎       input = 0;
-‎       min_digit2 = input;
 ‎       setDisplay(input, digit_position);
 ‎       digit[digit_position+=1] = input;
 ‎  
 ‎       Serial.println("Enter the sec (First digit)");
 ‎      while(Serial.available() == 0){;}
 ‎      input = Serial.parseint();
-‎      sec_digit1 = input;
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
 ‎
 ‎     Serial.println("Enter the sec (Second digit)");
 ‎      while(Serial.available() == 0){;}
 ‎      input = Serial.parseint();
-‎      sec_digit2 = input;
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
 ‎      }
