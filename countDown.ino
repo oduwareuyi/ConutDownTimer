@@ -192,12 +192,15 @@ unsigned long stop = 0;
 ‎              setDisplay(digit[i], digit_position);
 ‎           }
 ‎           
-‎            while(Serial.available() == 0){;}
-‎            String command =
-‎            Serial.readStringUntil('\n');
-‎            if (command == "STOP"){
-‎              digit_position = 1;
-‎              break;
-‎            }else{
-‎                Serial.println("Request not recorded");
-‎             }
+‎            while(Serial.available() >0){
+‎              String command =
+‎              Serial.readStringUntil('\n');
+‎              if (command == "STOP"){
+‎                digit_position = 1;
+‎                break;
+‎              }else{
+‎                 Serial.println("Request not recorded");
+               }
+            }
+‎       }
+}
