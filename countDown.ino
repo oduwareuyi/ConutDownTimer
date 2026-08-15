@@ -66,7 +66,7 @@
 ‎}
 ‎
 ‎void loop(){
-‎     DateTime now = rtc.now
+‎     DateTime now = rtc.now();
 ‎     if ((timeUnit == "hr") || (timeUnit == "Hr") || (timeUnit == "hR") || (timeUnit == "HR"){
 ‎        Serial.println("Enter the hour (First digit)");
 ‎        while(Serial.available() == 0){;}
@@ -162,5 +162,5 @@
 ‎              digit_position = 1;
 ‎              break;
 ‎            }else{
-‎                Serial.println("Request not recorded"
+‎                Serial.println("Request not recorded");
 ‎             }
