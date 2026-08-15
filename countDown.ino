@@ -151,6 +151,12 @@ unsigned long stop = 0;
 ‎      input = Serial.parseint();
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
+
+      mins = (digit1 * 10 + digit2) * 60;
+      secs = (digit1 * 10 + digit2);
+      start = now.unixtime();
+      stop = start + mins + secs;
+      EEPROM.put(0, stop);
 ‎    }else if((timeUnit == "sec") || (timeUnit == "Sec") || timeUnit = "SEC")){
 ‎        input = 0;
 ‎        setDisplay(input, digit_position);
@@ -171,6 +177,11 @@ unsigned long stop = 0;
 ‎      input = Serial.parseint();
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
+
+      secs = (digit1 * 10 + digit2);
+      start = now.unixtime();
+      stop = start + secs;
+      EEPROM.put(0, stop);
 ‎      }
 ‎
 ‎      while(true){
