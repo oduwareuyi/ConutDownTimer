@@ -17,7 +17,7 @@
 ‎int D4 = 13;
 int buzzer = A1;
 ‎
-‎int seg_outputs [7] = {A, B, C, D, E, F, G, DP};
+‎int seg_outputs [8] = {A, B, C, D, E, F, G, DP};
 ‎
 ‎int digits_output [4] = {D1, D2, D3, D4};
 
@@ -38,7 +38,7 @@ unsigned long stop = 0;
 ‎};
 ‎
 ‎void setDisplay(int input, int digit_position){
-‎   for (int i=0; i<(sizeof(digits_output)/sizeof(digits_output[0])):
+‎   for (int i=0; i<(sizeof(digits_output)/sizeof(digits_output[0])); i++):
 ‎        if (i == digit_position){
 ‎           continue;
 ‎        }else{
@@ -59,11 +59,11 @@ unsigned long stop = 0;
 ‎int digit[4]  = {digit1, digit2, digit3, digit4};
 ‎
 ‎void setup(){
-‎     for (int i = 0; i < (sizeof(seg_outputs)/sizeof(seg_outputs[0])); i++;){
+‎     for (int i = 0; i < (sizeof(seg_outputs)/sizeof(seg_outputs[0])); i++){
 ‎         pinMode(seg_outputs[i], OUTPUT);
 ‎         digitalWrite(seg_outputs[i], LOW);
 
-      for (int i = 0; i<(sizeof(digit)/sizeof(digit[0])){
+      for (int i = 0; i<(sizeof(digit)/sizeof(digit[0])); i++){
          pinMode(digit[i], LOW); 
       }
       digitalWrite(buzzer, LOW);
@@ -72,7 +72,7 @@ unsigned long stop = 0;
 ‎      rtc.begin();
       EEPROM.get(0, stop);
 ‎         
-‎      while (!serial){;}
+‎      while (!Serial){;}
 ‎       }
 ‎}
 ‎
@@ -80,13 +80,13 @@ unsigned long stop = 0;
 ‎     DateTime now = rtc.now();
      currentTime = now.unixtime();
      if (currentTime >= stop){
-       for (int i = 0; i< (sizeof(digit)/sizeof(digit[0]){
+       for (int i = 0; i< (sizeof(digit)/sizeof(digit[0])); i++){
          input = 0;
          setDisplay(input, digit_position);
          digit[digit_position+=1] = input;
 
         while(true){
-         analogWrite(A1, HIGH);
+         analogWrite(buzzer, HIGH);
          while(Serial.available()==0){;}
          buzzer_input = Serial.println("Type 'STOP' to shut off alarm")
 
@@ -97,7 +97,9 @@ unsigned long stop = 0;
          }
         }
      }
-‎     if ((timeUnit == "hr") || (timeUnit == "Hr") || (timeUnit == "hR") || (timeUnit == "HR"){
+     Serial.println("Enter hr/min/sec based on countdown duration");
+     timeUnit = Serial.readStringUntil('\n');
+‎     if ((timeUnit == "hr") || (timeUnit == "Hr") || (timeUnit == "hR") || (timeUnit == "HR")){
 ‎        Serial.println("Enter the hour (First digit)");
 ‎        while(Serial.available() == 0){;}
 ‎        input = Serial.parseint();
@@ -123,7 +125,7 @@ unsigned long stop = 0;
 ‎      digit[digit_position+=1] = input;
 
        hours = (digit1 * 10 + digit2) * 60 * 60;
-       mins = (digit1 * 10 + digit2) * 60;
+       mins = (digit3 * 10 + digit4) * 60;
        start = now.unixtime();
        stop = start + hours + mins;
        EEPROM.put(0, stop);
@@ -153,7 +155,7 @@ unsigned long stop = 0;
 ‎      digit[digit_position+=1] = input;
 
       mins = (digit1 * 10 + digit2) * 60;
-      secs = (digit1 * 10 + digit2);
+      secs = (digit3 * 10 + digit4);
       start = now.unixtime();
       stop = start + mins + secs;
       EEPROM.put(0, stop);
@@ -178,14 +180,14 @@ unsigned long stop = 0;
 ‎      setDisplay(input, digit_position);
 ‎      digit[digit_position+=1] = input;
 
-      secs = (digit1 * 10 + digit2);
+      secs = (digit3 * 10 + digit4);
       start = now.unixtime();
       stop = start + secs;
       EEPROM.put(0, stop);
 ‎      }
 ‎
 ‎      while(true){
-‎           for (int i=0; i<(sizeof(digit)/sizeof(digit[0])); i++;){
+‎           for (int i=0; i<(sizeof(digit)/sizeof(digit[0])); i++){
 ‎              digit_position = i;
 ‎              setDisplay(digit[i], digit_position);
 ‎           }
