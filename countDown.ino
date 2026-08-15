@@ -64,7 +64,7 @@ unsigned long stop = 0;
 ‎         digitalWrite(seg_outputs[i], LOW);
 
       for (int i = 0; i<(sizeof(digit)/sizeof(digit[0])); i++){
-         pinMode(digit[i], LOW); 
+         pinMode(digits_output[i], LOW); 
       }
       digitalWrite(buzzer, LOW);
       pinMode(buzzer, OUTPUT);
