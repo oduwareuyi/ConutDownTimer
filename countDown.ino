@@ -38,7 +38,7 @@ unsigned long stop = 0;
 ‎};
 ‎
 ‎void setDisplay(int input, int digit_position){
-‎   for (int i=0; i<(sizeof(digits_output)/sizeof(digits_output[0])); i++):
+‎   for (int i=0; i<(sizeof(digits_output)/sizeof(digits_output[0])); i++){
 ‎        if (i == digit_position){
 ‎           continue;
 ‎        }else{
@@ -48,7 +48,8 @@ unsigned long stop = 0;
 ‎   for (int i=0; i<(sizeof(segs[0])/sizeof(segs[0][0])); i++){
 ‎        digitalWrite(seg_outputs[i], segs[input][i]);
 ‎     }
-‎}
+‎   }
+}
 ‎
 ‎int digit_position= -1;
 ‎
@@ -64,7 +65,8 @@ unsigned long stop = 0;
 ‎         digitalWrite(seg_outputs[i], LOW);
 
       for (int i = 0; i<(sizeof(digit)/sizeof(digit[0])); i++){
-         pinMode(digits_output[i], LOW); 
+         pinMode(digits_output[i], OUTPUT);
+         digitalWrite(digits_output[i], OUTPUT);
       }
       digitalWrite(buzzer, LOW);
       pinMode(buzzer, OUTPUT);
