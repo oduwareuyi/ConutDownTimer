@@ -96,6 +96,8 @@ unsigned long stop = 0;
             Serial.println("Buzzer input not recognized.");
          }
         }
+     }else if ((currentTime<stop) && (currentTime>0)){
+        
      }
      Serial.println("Enter hr/min/sec based on countdown duration");
      timeUnit = Serial.readStringUntil('\n');
