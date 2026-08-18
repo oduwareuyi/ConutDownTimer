@@ -3,26 +3,12 @@
 ‎
 ‎RTC_DS1307 rtc;
 ‎
-‎int A = 2;
-‎int B = 3;
-‎int C = 4;
-‎int D = 5;
-‎int E = 6;
-‎int F = 7;
-‎int G = 8;
-‎int DP = 9;
-‎int D1 = 10;
-‎int D2 = 11;
-‎int D3 = 12;
-‎int D4 = 13;
-int buzzer = A1;
+‎int A = 2, B = 3, C = 4, D = 5, E = 6, F = 7, G = 8, DP = 9, D1 = 10, D2 = 11, D3 = 12, D4 = 13, buzzer = A1, digit1 = 0, digit2 = 0, digit3 = 0, digit4 = 0, digit_position= -1;
+unsigned long start = 0, stop = 0;
 ‎
 ‎int seg_outputs [8] = {A, B, C, D, E, F, G, DP};
 ‎
 ‎int digits_output [4] = {D1, D2, D3, D4};
-
-unsigned long start = 0;
-unsigned long stop = 0;
 ‎
 ‎int segs [10][7] = {
 ‎  {0,1,1,1,1,1,1,0},
@@ -37,6 +23,8 @@ unsigned long stop = 0;
 ‎  {0,1,1,1,0,0,1,1}
 ‎};
 ‎
+int digit[4]  = {digit1, digit2, digit3, digit4};
+
 ‎void setDisplay(int input, int digit_position){
 ‎   for (int i=0; i<(sizeof(digits_output)/sizeof(digits_output[0])); i++){
 ‎        if (i == digit_position){
@@ -50,14 +38,6 @@ unsigned long stop = 0;
 ‎     }
 ‎   }
 }
-‎
-‎int digit_position= -1;
-‎
-‎int digit1 = 0;
-‎int digit2 = 0;
-‎int digit3 = 0;
-‎int digit4 = 0;
-‎int digit[4]  = {digit1, digit2, digit3, digit4};
 ‎
 ‎void setup(){
 ‎     for (int i = 0; i < (sizeof(seg_outputs)/sizeof(seg_outputs[0])); i++){
